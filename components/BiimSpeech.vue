@@ -17,8 +17,9 @@
   min-width: 0;
   min-height: 0;
 }
-.biim-speech-body {
+.biim-speech > .biim-speech-body {
   height: 100%;
+  padding: 0.3rem 1rem; /* 下段は低いので、余白を詰めて文字の領域を広げる */
 }
 /* 左辺の中央から、アイコン側へ突き出す三角 */
 .biim-speech-tail {

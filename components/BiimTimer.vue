@@ -35,14 +35,17 @@ function reset() {
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
 
-// s キーで開始/停止(入力欄での入力や修飾キーとの組み合わせは無視)
+// s キーで開始/停止、r キーで(停止中のみ)リセット。入力欄での入力や修飾キーとの組み合わせは無視
 function onKeydown(e: KeyboardEvent) {
-  if (e.key !== 's' || e.ctrlKey || e.metaKey || e.altKey || e.repeat)
+  if (e.ctrlKey || e.metaKey || e.altKey || e.repeat)
     return
   const el = e.target as HTMLElement | null
   if (el?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el?.tagName ?? ''))
     return
-  toggle()
+  if (e.key === 's')
+    toggle()
+  else if (e.key === 'r' && !running.value)
+    reset()
 }
 onMounted(() => window.addEventListener('keydown', onKeydown))
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
@@ -58,7 +61,7 @@ const centi = computed(() => pad(Math.floor(elapsed.value / 10) % 100))
 </script>
 
 <template>
-  <!-- s キーまたはクリックで開始/停止、ダブルクリックでリセット -->
+  <!-- s キーまたはクリックで開始/停止、r キー(停止中のみ)またはダブルクリックでリセット -->
   <div class="biim-timer">
     <div class="biim-timer-text font-mono" @click="toggle" @dblclick="reset">
       <span>{{ main }}</span><span class="centi">.{{ centi }}</span>

@@ -5,7 +5,11 @@ theme: seriph
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
+
+# 右下の枠に出す固定タイトル(title)と、その下の灰色のジャンル(genre: 100% / Any% など)
 title: Welcome to Slidev
+genre: 100%
+
 info: |
   ## Slidev Starter Template
   Presentation slides for developers.
@@ -25,8 +29,6 @@ duration: 35min
 # 全スライドに biim レイアウトを適用(個別に layout を指定したスライドはそちらが優先)
 defaults:
   layout: biim
-# 右下の枠に出す固定タイトル(title)とジャンル(genre)
-genre: LT
 # 等幅フォント(タイマー用)。端末にあるフォントに依存しないよう Web フォントで固定する
 fonts:
   mono: JetBrains Mono
@@ -57,7 +59,7 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-# What is Slidev?
+# こんな感じに日本語の文章を並べたらどうなるんかな?
 
 Slidev is a slides maker and presenter designed for developers, consist of the following features
 
@@ -73,11 +75,6 @@ Slidev is a slides maker and presenter designed for developers, consist of the f
 
 Read more about [Why Slidev?](https://sli.dev/guide/why)
 
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
-
 <style>
 h1 {
   background-color: #2B90B6;
@@ -91,7 +88,10 @@ h1 {
 </style>
 
 <!--
-Here is another comment.
+こんにちは
+[click] お元気ですか
+[click:3] はろー
+[click+1] さようなら
 -->
 
 ---

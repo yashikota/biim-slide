@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useSlideContext } from '@slidev/client'
+import { useLiveSlide } from '../composables/liveSlide'
+
 // frontmatter の background を、メインの枠の背景として使う(seriph の cover と同様)
 defineProps<{ background?: string }>()
+
+// ノートで指定された最大のクリック番号まで、クリックを用意する
+const { $page } = useSlideContext()
+const { comments } = useLiveSlide($page)
+const extraClicks = computed(() => Math.max(0, ...comments.value.map(c => c.click)))
 </script>
 
 <template>
@@ -20,6 +29,9 @@ defineProps<{ background?: string }>()
         <slot />
       </div>
     </div>
+
+    <!-- セリフ欄用のクリック。絶対位置(v-click="i")なので、スライド側の v-click と順番が競合しない -->
+    <span v-for="i in extraClicks" :key="i" v-click="i" class="biim-click" />
   </div>
 </template>
 
@@ -40,6 +52,11 @@ defineProps<{ background?: string }>()
   background-size: cover;
   background-position: center;
   color: #fff;
+}
+.biim-click {
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 .biim-screen {
   width: 980px;

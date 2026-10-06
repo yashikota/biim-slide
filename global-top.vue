@@ -12,7 +12,9 @@
       <BiimFrame class="biim-main" />
 
       <BiimIcon class="biim-icon" />
-      <BiimSpeech class="biim-speech" />
+      <BiimSpeech class="biim-speech">
+        <BiimSpeechText />
+      </BiimSpeech>
 
       <!-- 右端: 上(スライドのタイトル) 2 : 下(固定タイトル・タイマー) 6 -->
       <div class="biim-side">

@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useNav } from '@slidev/client'
+import { useLiveSlide } from '../composables/liveSlide'
 
-const { currentSlideRoute } = useNav()
-const title = computed(() => currentSlideRoute.value?.meta?.slide?.title ?? '')
+const { currentSlideNo } = useNav()
+const { title } = useLiveSlide(currentSlideNo)
 </script>
 
 <template>
-  <div class="biim-slide-title">{{ title }}</div>
+  <BiimFitText class="biim-slide-title" :text="title" :max="16" :min="9" />
 </template>
 
 <style scoped>
 .biim-slide-title {
-  font-size: 1rem;
   font-weight: bold;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 </style>
