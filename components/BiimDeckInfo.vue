@@ -9,17 +9,17 @@ const genre = computed(() => configs.genre ?? '')
 </script>
 
 <template>
-  <div class="biim-status">
-    <div class="biim-status-name">{{ title }}</div>
-    <div class="biim-status-genre">{{ genre }}</div>
+  <div class="biim-deck-info">
+    <div class="biim-deck-info-name">{{ title }}</div>
+    <div class="biim-deck-info-genre">{{ genre }}</div>
   </div>
 </template>
 
 <style scoped>
-.biim-status {
+.biim-deck-info {
   text-align: left;
 }
-.biim-status-name {
+.biim-deck-info-name {
   font-size: 0.8rem;
   font-weight: bold;
   line-height: 1.3;
@@ -27,7 +27,7 @@ const genre = computed(() => configs.genre ?? '')
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.biim-status-genre {
+.biim-deck-info-genre {
   font-size: 0.7rem;
   color: #9ca3af; /* 灰色 */
 }

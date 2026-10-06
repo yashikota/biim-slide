@@ -4,7 +4,7 @@
     {
       "name": "slidev",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["slidev", "--port", "3030"],
+      "runtimeArgs": ["slidev", "demo.md", "--port", "3030"],
       "port": 3030
     },
     {

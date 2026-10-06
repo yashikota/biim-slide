@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useBiimControls } from './composables/biimControls'
+
 // 全スライドの上に固定表示される外枠(Slidev の global layer)。
 // スライドは layouts/biim.vue が左上の窓にだけ描画するので、窓の外はここで覆い隠す。
+useBiimControls() // タイマーのキー操作(s / r / 最後で停止)とスプリットの確定
 </script>
 
 <template>
@@ -22,7 +25,7 @@
           <BiimSlideTitle />
         </BiimFrame>
         <BiimFrame class="biim-info">
-          <BiimStatus />
+          <BiimDeckInfo />
           <BiimSplits />
           <BiimTimer />
         </BiimFrame>
@@ -102,7 +105,7 @@
   display: flex;
   align-items: center;
 }
-/* 固定タイトルは上、スプリット表は真ん中、タイマーは一番下 */
+/* 固定タイトル(BiimDeckInfo)は上、スプリット表は真ん中、タイマーは一番下 */
 .biim-info {
   display: flex;
   flex-direction: column;

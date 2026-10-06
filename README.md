@@ -1,11 +1,70 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# biim-slide
 
-To start the slide show:
+[Slidev](https://sli.dev/) で、解説動画の「biim システム」風レイアウトのスライドを作る。
 
-- `npm install`
-- `npm run dev`
-- visit <http://localhost:3030>
+左上にスライド本文、右上にスライドのタイトル、右下に固定タイトル・ジャンル・スプリット表・タイマー、
+左下にアイコンとセリフ欄(スライドのノートを 1 行ずつ表示)が並ぶ。
 
-Edit the [slides.md](./slides.md) to see the changes.
+## 使い方
 
-Learn more about Slidev at the [documentation](https://sli.dev/).
+```sh
+pnpm install
+pnpm dev            # demo.md を開く(別のデッキは pnpm exec slidev <名前>.md)
+pnpm build          # すべてのデッキを dist/ にビルド
+```
+
+## デッキを増やす
+
+1. `_template.md` を、リポジトリ直下に `<名前>.md` としてコピーする。
+2. `pnpm exec slidev <名前>.md` で編集する。
+3. `pnpm build` で、`dist/<名前>/` に出力され、`dist/index.html` に一覧が作られる。
+   GitHub Pages では `https://<ユーザー>.github.io/<リポジトリ>/<名前>/` になる。
+
+デッキはリポジトリ直下に置く(`components/`、`layouts/`、`global-top.vue` などの共有部品を、
+Slidev がエントリーのあるフォルダから読むため)。デッキ固有の画像などは好きなフォルダに置いてよい。
+`README.md` と、`_` で始まるファイルはビルド対象外。ルーターは hash モードなので、リロードしても 404 にならない。
+
+## スライドの書き方
+
+冒頭の frontmatter(デッキ全体):
+
+| キー | 内容 |
+|---|---|
+| `title` | 右下に出す固定タイトル |
+| `genre` | その下の灰色の文字(`100%`、`Any%` など) |
+| `est` | 1 ページ目の予定時間 |
+
+各スライドの frontmatter:
+
+- `est`: そのスライドの予定時間(秒の数値か `m:ss`)。**全スライドに書く**。右下の表には先頭からの累計で出る。
+
+セリフ欄はスライド末尾のノート(`<!-- -->`)。1 行 1 コメントで、クリックごとに次の行が出る。
+
+```
+<!--
+こんにちは
+[click] クリックで次のコメント
+[click:3] 3 クリック目に出す
+[click+1] 直前のコメントの 1 クリック後に出す
+-->
+```
+
+## キー操作
+
+| キー | 動作 |
+|---|---|
+| `s` | タイマーの開始/停止 |
+| `r` | タイマーとスプリットのリセット(停止中のみ) |
+| `Home` | 最初のページへ |
+| 最後のページで「次へ」 | タイマーを止めて、最後のスプリットを確定 |
+
+## 構成
+
+| パス | 役割 |
+|---|---|
+| `global-top.vue` | 外枠(全スライドの上に固定表示)。窓の外を覆うので、ページ遷移は左上の窓の中だけに見える |
+| `layouts/biim.vue` | スライド本文を左上の窓に縮小して描く |
+| `components/` | 外枠の部品(`BiimFrame`、`BiimFitText`、`BiimSplits`、`BiimTimer` など) |
+| `composables/` | タイマーの状態(`biimTimer.ts`)、キー操作(`biimControls.ts`)、タイトルとノートの取得(`liveSlide.ts`) |
+| `style.css` | 寸法(`--biim-s` で左上の窓の縮尺を変えられる) |
+| `setup/shortcuts.ts` | `Home` キー |

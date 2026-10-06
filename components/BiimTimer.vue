@@ -1,39 +1,12 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
+import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-import { elapsed, recordSplit, reset, running, toggle } from '../composables/biimTimer'
+import { elapsed, reset, toggle } from '../composables/biimTimer'
 
-const { currentSlideNo, hasNext } = useNav()
+// 表示と、クリックでの操作(クリックで開始/停止、ダブルクリックでリセット)だけを担当する。
+// キー操作とスプリットの確定は composables/biimControls.ts。
+const { currentSlideNo } = useNav()
 const toggleTimer = () => toggle(currentSlideNo.value)
-
-// 先のスライドへ進んだら、離れたスライドを終えた瞬間のタイマー値を確定する
-watch(currentSlideNo, (now, prev) => {
-  if (prev != null && now > prev)
-    recordSplit(prev)
-})
-
-// Slidev の「次へ」のキー(右、下、PageDown、Space)
-const isNextKey = (e: KeyboardEvent) =>
-  ['ArrowRight', 'ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey)
-
-// s キー/クリックで開始・停止、r キー(停止中のみ)/ダブルクリックでリセット。入力欄での入力や修飾キーとの組み合わせは無視。
-// 最後のスライドの最後のクリックで「次へ」を押したら停止する。
-function onKeydown(e: KeyboardEvent) {
-  if (e.ctrlKey || e.metaKey || e.altKey || e.repeat)
-    return
-  const el = e.target as HTMLElement | null
-  if (el?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el?.tagName ?? ''))
-    return
-  if (e.key === 's')
-    toggleTimer()
-  else if (e.key === 'r' && !running.value)
-    reset()
-  else if (isNextKey(e) && !hasNext.value && running.value)
-    toggleTimer() // 最後のスライドを終えて先へ進もうとしたら、タイマーを止めて確定する
-}
-
-onMounted(() => window.addEventListener('keydown', onKeydown))
-onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
 const pad = (n: number) => String(n).padStart(2, '0')
 

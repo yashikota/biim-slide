@@ -3,9 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build",
-    "dev": "slidev --open",
-    "export": "slidev export"
+    "dev": "slidev demo.md --open",
+    "build": "node scripts/build-decks.mjs",
+    "export": "slidev export demo.md"
   },
   "dependencies": {
     "@slidev/cli": "^53.0.0",
