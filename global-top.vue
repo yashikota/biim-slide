@@ -68,17 +68,17 @@
   box-sizing: border-box;
   color: var(--slidev-theme-fg, inherit);
 }
-.biim-main {
+.biim-grid :deep(.biim-main) {
   grid-column: 1 / 3;
   grid-row: 1;
   padding: 0;
 }
-.biim-icon {
+.biim-grid :deep(.biim-icon) {
   grid-column: 1;
   grid-row: 2;
 }
-/* アイコンの右から右端まで */
-.biim-speech {
+/* アイコンの右から右端まで。子コンポーネントのルートへは :deep で当てる(本番ビルドで scoped が付かないことがあった) */
+.biim-grid :deep(.biim-speech) {
   grid-column: 2 / 4;
   grid-row: 2;
 }

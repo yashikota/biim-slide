@@ -1,5 +1,8 @@
+<script setup lang="ts">
+// BiimFrame は overflow:hidden なので、はみ出す吹き出しの尻尾は外側のラッパーに描く
+</script>
+
 <template>
-  <!-- BiimFrame は overflow:hidden なので、はみ出す吹き出しの尻尾は外側のラッパーに描く -->
   <div class="biim-speech">
     <BiimFrame class="biim-speech-body">
       <slot />

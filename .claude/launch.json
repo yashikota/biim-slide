@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["slidev", "--port", "3030"],
       "port": 3030
+    },
+    {
+      "name": "dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4000", "-d", "dist"],
+      "port": 4000
     }
   ]
 }

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import defaultIcon from '../assets/icon.png'
 
+// 画像の元サイズで親(グリッド行)が広がらないよう、画像は絶対配置にする
 withDefaults(defineProps<{ src?: string }>(), { src: defaultIcon })
 </script>
 
 <template>
-  <!-- 画像の元サイズで親(グリッド行)が広がらないよう、画像は絶対配置にする -->
   <div class="biim-icon">
     <img :src="src" alt="">
   </div>
