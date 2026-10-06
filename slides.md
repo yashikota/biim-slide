@@ -25,6 +25,8 @@ duration: 35min
 # 全スライドに biim レイアウトを適用(個別に layout を指定したスライドはそちらが優先)
 defaults:
   layout: biim
+# 右下の枠に出すジャンル(スライドごとの frontmatter で上書き可)
+genre: LT
 ---
 
 # Welcome to Slidev

@@ -12,7 +12,10 @@ defineProps<{ background?: string }>()
     <BiimSpeech class="biim-speech" />
     <div class="biim-side">
       <BiimFrame class="biim-title" />
-      <BiimFrame class="biim-timer" />
+      <BiimFrame class="biim-timer">
+        <BiimStatus />
+        <BiimTimer />
+      </BiimFrame>
     </div>
   </div>
 </template>
@@ -56,6 +59,16 @@ defineProps<{ background?: string }>()
   gap: var(--gap);
   min-width: 0;
   min-height: 0;
+}
+/* 右端は狭いので、枠の余白を詰める */
+.biim-side > .biim-frame.plain {
+  padding: 0.4rem 0.5rem;
+}
+/* タイマー枠: ステータスは上、タイマーは一番下 */
+.biim-timer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 /* アイコンの右から右端まで */
 .biim-speech {
