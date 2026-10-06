@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 // scaled: 中身を designWidth x designHeight の画面として描画し、枠に収まるよう縮小する(比率維持)
 const props = withDefaults(defineProps<{
@@ -16,6 +16,17 @@ const props = withDefaults(defineProps<{
 const frame = ref<HTMLElement>()
 const scale = ref(1)
 let observer: ResizeObserver | undefined
+
+// 文字が読めるよう、背景画像の上に暗いオーバーレイを重ねる
+const frameStyle = computed(() => props.background
+  ? { backgroundImage: `linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url(${props.background})` }
+  : undefined)
+
+const screenStyle = computed(() => ({
+  width: `${props.designWidth}px`,
+  height: `${props.designHeight}px`,
+  transform: `scale(${scale.value})`,
+}))
 
 function update() {
   if (!frame.value)
@@ -41,12 +52,12 @@ onBeforeUnmount(() => observer?.disconnect())
     ref="frame"
     class="biim-frame"
     :class="{ plain: !scaled, 'has-bg': !!background }"
-    :style="background ? { backgroundImage: `linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url(${background})` } : undefined"
+    :style="frameStyle"
   >
     <div
       v-if="scaled"
       class="biim-frame-screen"
-      :style="{ width: `${designWidth}px`, height: `${designHeight}px`, transform: `scale(${scale})` }"
+      :style="screenStyle"
     >
       <slot />
     </div>
