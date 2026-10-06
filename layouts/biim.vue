@@ -8,6 +8,7 @@ defineProps<{ background?: string }>()
     <BiimFrame scaled :background="background" class="biim-main">
       <slot />
     </BiimFrame>
+    <BiimIcon class="biim-icon" />
   </div>
 </template>
 
@@ -31,5 +32,10 @@ defineProps<{ background?: string }>()
 .biim-main {
   grid-column: 1;
   grid-row: 1;
+}
+.biim-icon {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: start;
 }
 </style>
