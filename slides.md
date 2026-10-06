@@ -25,8 +25,11 @@ duration: 35min
 # 全スライドに biim レイアウトを適用(個別に layout を指定したスライドはそちらが優先)
 defaults:
   layout: biim
-# 右下の枠に出すジャンル(スライドごとの frontmatter で上書き可)
+# 右下の枠に出す固定タイトル(title)とジャンル(genre)
 genre: LT
+# 等幅フォント(タイマー用)。端末にあるフォントに依存しないよう Web フォントで固定する
+fonts:
+  mono: JetBrains Mono
 ---
 
 # Welcome to Slidev

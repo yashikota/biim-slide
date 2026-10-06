@@ -1,18 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useNav, useSlideContext } from '@slidev/client'
+import { configs } from '@slidev/client'
 
-const { currentSlideRoute } = useNav()
-const { $slidev } = useSlideContext()
-
-const frontmatter = computed<Record<string, any>>(
-  () => currentSlideRoute.value?.meta?.slide?.frontmatter ?? {},
-)
-
-const title = computed(() => currentSlideRoute.value?.meta?.slide?.title ?? '')
-// genre はスライドの frontmatter、なければ冒頭の headmatter から
-const genre = computed(() => frontmatter.value.genre ?? $slidev.configs.genre ?? '')
-const name = computed(() => [title.value, genre.value].filter(Boolean).join(' '))
+// 固定タイトルとジャンルは、スライド冒頭の frontmatter(title / genre)で指定する
+const name = computed(() => [configs.title, configs.genre].filter(Boolean).join(' '))
 </script>
 
 <template>

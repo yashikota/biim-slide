@@ -1,85 +1,57 @@
 <script setup lang="ts">
-// frontmatter の background を左上の枠の背景として使う(seriph の cover と同様)
+// frontmatter の background を、メインの枠の背景として使う(seriph の cover と同様)
 defineProps<{ background?: string }>()
 </script>
 
 <template>
-  <div class="biim slidev-layout">
-    <BiimFrame scaled :background="background" class="biim-main">
-      <slot />
-    </BiimFrame>
-    <BiimIcon class="biim-icon" />
-    <BiimSpeech class="biim-speech" />
-    <div class="biim-side">
-      <BiimFrame class="biim-title" />
-      <BiimFrame class="biim-timer">
-        <BiimStatus />
-        <BiimTimer />
-      </BiimFrame>
+  <!--
+    スライド本文だけを担当する。枠・アイコン・タイマーなどの外枠は global-top.vue が
+    ページ遷移をまたいで固定表示し、メインの窓以外を覆う。
+    そのため遷移アニメーションは窓の中だけに見える。
+  -->
+  <div class="slidev-layout biim">
+    <div
+      class="biim-viewport"
+      :class="{ 'has-bg': !!background }"
+      :style="background ? { backgroundImage: `linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url(${background})` } : undefined"
+    >
+      <!-- 980x552 の画面として描画し、メインの窓に収まるよう縮小する -->
+      <div class="biim-screen">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/*
- * 画面は 980x552。左上の枠は画面と同じ比率(980:552)で縮小表示する。
- * 枠の外寸 = 980*s + 4px(罫線) x 552*s + 4px
- * 下段の高さ(= アイコンの直径)は、残りの高さから決まる。
- */
 .biim {
-  --gap: 10px;
-  --s: 0.8;
-  --main-w: calc(980px * var(--s) + 4px);
-  --main-h: calc(552px * var(--s) + 4px);
-  --icon: calc(552px - var(--gap) * 3 - var(--main-h));
-  --biim-bg: #fff;
-  display: grid;
-  grid-template-columns: var(--icon) calc(var(--main-w) - var(--icon) - var(--gap)) 1fr;
-  grid-template-rows: var(--main-h) 1fr;
-  gap: var(--gap);
-  padding: var(--gap);
-  height: 100%;
-  width: 100%;
+  position: relative;
+  padding: 0;
+}
+.biim-viewport {
+  position: absolute;
+  left: var(--biim-hole-l);
+  top: var(--biim-hole-t);
+  width: var(--biim-main-w);
+  height: var(--biim-main-h);
+  overflow: hidden;
+}
+.biim-viewport.has-bg {
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+.biim-screen {
+  width: 980px;
+  height: 552px;
+  transform: scale(var(--biim-s));
+  transform-origin: top left;
   box-sizing: border-box;
+  padding: 2.5rem 3.5rem; /* Slidev 標準レイアウトの余白 */
 }
-.biim-main {
-  grid-column: 1 / 3;
-  grid-row: 1;
-}
-.biim-icon {
-  grid-column: 1;
-  grid-row: 2;
-}
-/* 右端: 上(タイトル) 2 : 下(タイマーと est) 6 */
-.biim-side {
-  grid-column: 3;
-  grid-row: 1;
-  display: grid;
-  grid-template-rows: 2fr 6fr;
-  gap: var(--gap);
-  min-width: 0;
-  min-height: 0;
-}
-/* 右端は狭いので、枠の余白を詰める */
-.biim-side > .biim-frame.plain {
-  padding: 0.4rem 0.5rem;
-}
-/* タイマー枠: ステータスは上、タイマーは一番下 */
-.biim-timer {
+.has-bg .biim-screen {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-/* アイコンの右から右端まで */
-.biim-speech {
-  grid-column: 2 / 4;
-  grid-row: 2;
-}
-</style>
-
-<style>
-/* スライド背景色(吹き出しの尻尾の塗りつぶし用)。scoped だとダーク側が効かないので別ブロック */
-html.dark .biim {
-  --biim-bg: #121212;
+  justify-content: center;
 }
 </style>

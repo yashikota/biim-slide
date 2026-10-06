@@ -1,0 +1,24 @@
+/*
+ * biim レイアウトの寸法。すべて 980x552 の画面(キャンバス)上の px なので、
+ * Slidev が画面全体を一様に拡大縮小する限り、どのデバイスでも同じ見た目になる。
+ */
+:root {
+  --biim-s: 0.8; /* 左上の枠(メイン)の縮尺 */
+  --biim-gap: 10px;
+  --biim-border: 2px;
+
+  /* メインの内側(スライド本文が見える範囲) */
+  --biim-main-w: calc(980px * var(--biim-s));
+  --biim-main-h: calc(552px * var(--biim-s));
+  --biim-hole-l: calc(var(--biim-gap) + var(--biim-border));
+  --biim-hole-t: calc(var(--biim-gap) + var(--biim-border));
+  --biim-hole-r: calc(var(--biim-hole-l) + var(--biim-main-w));
+  --biim-hole-b: calc(var(--biim-hole-t) + var(--biim-main-h));
+
+  /* スライドの背景色(枠の外を覆うマスクと吹き出しの尻尾に使う) */
+  --biim-bg: #fff;
+}
+
+html.dark {
+  --biim-bg: #121212;
+}

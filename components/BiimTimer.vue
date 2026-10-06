@@ -46,7 +46,7 @@ const centi = computed(() => pad(Math.floor(elapsed.value / 10) % 100))
 <template>
   <!-- クリックで開始/停止、ダブルクリックでリセット -->
   <div class="biim-timer">
-    <div class="biim-timer-text" @click="toggle" @dblclick="reset">
+    <div class="biim-timer-text font-mono" @click="toggle" @dblclick="reset">
       <span>{{ main }}</span><span class="centi">.{{ centi }}</span>
     </div>
   </div>
@@ -58,13 +58,13 @@ const centi = computed(() => pad(Math.floor(elapsed.value / 10) % 100))
   border-top: 1px solid #9ca3af; /* 灰色の罫線 */
 }
 .biim-timer-text {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  /* 枠の幅いっぱい(実測で、この除数なら幅の約98%) */
-  font-size: calc(100cqw / 3.9);
+  /* 等幅(字幅 0.6em)なら文字幅は 5桁 + .cc(0.65倍 x 3桁) = 4.17em。枠の幅の約98%に収める */
+  font-size: calc(100cqw / 4.25);
   line-height: 1;
   white-space: nowrap;
   padding-top: 0.4rem;
   cursor: pointer;
+  pointer-events: auto; /* 外枠(global-top)は pointer-events: none */
   user-select: none;
 }
 .centi {
