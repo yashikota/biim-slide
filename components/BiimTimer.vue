@@ -33,6 +33,20 @@ function reset() {
 </script>
 
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted } from 'vue'
+
+// s キーで開始/停止(入力欄での入力や修飾キーとの組み合わせは無視)
+function onKeydown(e: KeyboardEvent) {
+  if (e.key !== 's' || e.ctrlKey || e.metaKey || e.altKey || e.repeat)
+    return
+  const el = e.target as HTMLElement | null
+  if (el?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el?.tagName ?? ''))
+    return
+  toggle()
+}
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
+
 const pad = (n: number) => String(n).padStart(2, '0')
 
 // 1時間超えは想定しない: mm:ss.cc
@@ -44,7 +58,7 @@ const centi = computed(() => pad(Math.floor(elapsed.value / 10) % 100))
 </script>
 
 <template>
-  <!-- クリックで開始/停止、ダブルクリックでリセット -->
+  <!-- s キーまたはクリックで開始/停止、ダブルクリックでリセット -->
   <div class="biim-timer">
     <div class="biim-timer-text font-mono" @click="toggle" @dblclick="reset">
       <span>{{ main }}</span><span class="centi">.{{ centi }}</span>
