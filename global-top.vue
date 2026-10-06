@@ -23,6 +23,7 @@
         </BiimFrame>
         <BiimFrame class="biim-info">
           <BiimStatus />
+          <BiimSplits />
           <BiimTimer />
         </BiimFrame>
       </div>
@@ -101,7 +102,7 @@
   display: flex;
   align-items: center;
 }
-/* 固定タイトルは上、タイマーは一番下 */
+/* 固定タイトルは上、スプリット表は真ん中、タイマーは一番下 */
 .biim-info {
   display: flex;
   flex-direction: column;

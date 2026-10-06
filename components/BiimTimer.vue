@@ -1,41 +1,23 @@
-<script lang="ts">
-import { computed, ref } from 'vue'
-
-// レイアウトはスライドごとに作り直されるので、タイマーの状態はモジュール側(全インスタンス共有)に置く
-const elapsed = ref(0) // ms
-const running = ref(false)
-let startedAt = 0
-let base = 0
-let frameId = 0
-
-function tick() {
-  elapsed.value = base + (performance.now() - startedAt)
-  frameId = requestAnimationFrame(tick)
-}
-
-function toggle() {
-  if (running.value) {
-    cancelAnimationFrame(frameId)
-    running.value = false
-    return
-  }
-  base = elapsed.value
-  startedAt = performance.now()
-  running.value = true
-  tick()
-}
-
-function reset() {
-  base = 0
-  startedAt = performance.now()
-  elapsed.value = 0
-}
-</script>
-
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted } from 'vue'
+import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
+import { useNav } from '@slidev/client'
+import { elapsed, recordSplit, reset, running, toggle } from '../composables/biimTimer'
 
-// s キーで開始/停止、r キーで(停止中のみ)リセット。入力欄での入力や修飾キーとの組み合わせは無視
+const { currentSlideNo, hasNext } = useNav()
+const toggleTimer = () => toggle(currentSlideNo.value)
+
+// 先のスライドへ進んだら、離れたスライドを終えた瞬間のタイマー値を確定する
+watch(currentSlideNo, (now, prev) => {
+  if (prev != null && now > prev)
+    recordSplit(prev)
+})
+
+// Slidev の「次へ」のキー(右、下、PageDown、Space)
+const isNextKey = (e: KeyboardEvent) =>
+  ['ArrowRight', 'ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey)
+
+// s キー/クリックで開始・停止、r キー(停止中のみ)/ダブルクリックでリセット。入力欄での入力や修飾キーとの組み合わせは無視。
+// 最後のスライドの最後のクリックで「次へ」を押したら停止する。
 function onKeydown(e: KeyboardEvent) {
   if (e.ctrlKey || e.metaKey || e.altKey || e.repeat)
     return
@@ -43,10 +25,13 @@ function onKeydown(e: KeyboardEvent) {
   if (el?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el?.tagName ?? ''))
     return
   if (e.key === 's')
-    toggle()
+    toggleTimer()
   else if (e.key === 'r' && !running.value)
     reset()
+  else if (isNextKey(e) && !hasNext.value && running.value)
+    toggleTimer() // 最後のスライドを終えて先へ進もうとしたら、タイマーを止めて確定する
 }
+
 onMounted(() => window.addEventListener('keydown', onKeydown))
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
@@ -61,9 +46,8 @@ const centi = computed(() => pad(Math.floor(elapsed.value / 10) % 100))
 </script>
 
 <template>
-  <!-- s キーまたはクリックで開始/停止、r キー(停止中のみ)またはダブルクリックでリセット -->
   <div class="biim-timer">
-    <div class="biim-timer-text font-mono" @click="toggle" @dblclick="reset">
+    <div class="biim-timer-text font-mono" @click="toggleTimer" @dblclick="reset">
       <span>{{ main }}</span><span class="centi">.{{ centi }}</span>
     </div>
   </div>

@@ -55,6 +55,7 @@ export function useLiveSlide(no: MaybeRef<number>) {
   const { info } = useDynamicSlideInfo(no)
   const meta = computed(() => slides.value[unref(no) - 1]?.meta?.slide)
   const title = computed(() => info.value?.title ?? meta.value?.title ?? '')
+  const frontmatter = computed<Record<string, any>>(() => info.value?.frontmatter ?? meta.value?.frontmatter ?? {})
   const comments = computed(() => parseComments(info.value ? info.value.note : meta.value?.note))
-  return { title, comments }
+  return { title, comments, frontmatter }
 }

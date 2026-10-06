@@ -32,6 +32,8 @@ defaults:
 # 等幅フォント(タイマー用)。端末にあるフォントに依存しないよう Web フォントで固定する
 fonts:
   mono: JetBrains Mono
+# このスライドの予定時間(est)。秒の数値か m:ss。全スライドに書く(右下のスプリット表に出る)
+est: 0:30
 ---
 
 # Welcome to Slidev
@@ -57,6 +59,7 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 ---
 transition: fade-out
+est: 1:30
 ---
 
 # こんな感じに日本語の文章を並べたらどうなるんかな?
@@ -97,6 +100,7 @@ h1 {
 ---
 transition: slide-up
 level: 2
+est: 45
 ---
 
 # Navigation
@@ -122,6 +126,7 @@ Hover on the bottom-left corner to see the navigation's controls panel, [learn m
 <p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
 
 ---
+est: 1:00
 ---
 
 # Table of contents
@@ -146,6 +151,7 @@ The title will be inferred from your slide content, or you can override it with 
 </div>
 
 ---
+est: 1:00
 ---
 
 # Code
@@ -197,6 +203,7 @@ Notes can also sync with clicks
 -->
 
 ---
+est: 1:00
 level: 2
 ---
 
@@ -271,6 +278,8 @@ const author = {
 ````
 
 ---
+est: 1:00
+---
 
 # Components
 
@@ -306,6 +315,7 @@ Also, HTML elements are valid:
 -->
 
 ---
+est: 1:00
 class: px-20
 ---
 
@@ -336,6 +346,8 @@ theme: seriph
 Read more about [How to use a theme](https://sli.dev/guide/theme-addon#use-theme) and
 check out the [Awesome Themes Gallery](https://sli.dev/resources/theme-gallery).
 
+---
+est: 1:00
 ---
 
 # Clicks Animations
@@ -398,6 +410,8 @@ also allows you to add
 
 </div>
 
+---
+est: 1:00
 ---
 
 # Motions
@@ -479,6 +493,8 @@ const final = {
 </div>
 
 ---
+est: 1:00
+---
 
 # $\LaTeX$
 
@@ -500,6 +516,8 @@ $$
 
 [Learn more](https://sli.dev/features/latex)
 
+---
+est: 1:00
 ---
 
 # Diagrams
@@ -579,6 +597,7 @@ database "MySql" {
 Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML Diagrams](https://sli.dev/features/plantuml)
 
 ---
+est: 1:00
 foo: bar
 dragPos:
   square: 691,32,167,_,-16
@@ -624,10 +643,13 @@ Double-click on the draggable elements to edit their positions.
 <v-drag-arrow pos="67,452,253,46" two-way op70 />
 
 ---
+est: 1:00
 src: ./pages/imported-slides.md
 hide: false
 ---
 
+---
+est: 1:00
 ---
 
 # Monaco Editor
@@ -655,6 +677,7 @@ console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-
 ```
 
 ---
+est: 1:00
 class: text-center
 ---
 
