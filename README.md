@@ -71,3 +71,4 @@ URL を開いただけや、前へ戻る操作では始まらない。
 | `composables/` | タイマーの状態(`biimTimer.ts`)、キー操作(`biimControls.ts`)、ノートと est の取得(`liveSlide.ts`) |
 | `style.css` | 寸法(`--biim-s` で左上の窓の縮尺を変えられる) |
 | `setup/shortcuts.ts` | `Home` キー |
+| `setup/preparser.ts` | ノートを frontmatter の `biimNote` に写す(本番ビルドでもセリフ欄が出るように) |
