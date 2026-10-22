@@ -2,7 +2,7 @@
 
 [Slidev](https://sli.dev/) で、解説動画の「biim システム」風レイアウトのスライドを作る。
 
-左上にスライド本文、右上にスライドのタイトルとページ番号(`3/12` のような現在地)、右下に固定タイトル・ジャンル・スプリット表・タイマー、
+左上にスライド本文、右上にページ番号(`3/12` のような現在地)、右下に固定タイトル・ジャンル・スプリット表・タイマー、
 左下にアイコンとセリフ欄(スライドのノートを 1 行ずつ表示)が並ぶ。
 
 ## 使い方
@@ -68,6 +68,7 @@ URL を開いただけや、前へ戻る操作では始まらない。
 | `global-top.vue` | 外枠(全スライドの上に固定表示)。窓の外を覆うので、ページ遷移は左上の窓の中だけに見える |
 | `layouts/biim.vue` | スライド本文を左上の窓に縮小して描く |
 | `components/` | 外枠の部品(`BiimFrame`、`BiimFitText`、`BiimPageNo`、`BiimSplits`、`BiimTimer` など) |
-| `composables/` | タイマーの状態(`biimTimer.ts`)、キー操作(`biimControls.ts`)、タイトルとノートの取得(`liveSlide.ts`) |
+| `composables/` | タイマーの状態(`biimTimer.ts`)、キー操作(`biimControls.ts`)、ノートと est の取得(`liveSlide.ts`) |
 | `style.css` | 寸法(`--biim-s` で左上の窓の縮尺を変えられる) |
 | `setup/shortcuts.ts` | `Home` キー |
+| `setup/preparser.ts` | ノートを frontmatter の `biimNote` に写す(本番ビルドでもセリフ欄が出るように) |

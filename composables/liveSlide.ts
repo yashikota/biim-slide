@@ -56,6 +56,7 @@ export function useLiveSlide(no: MaybeRef<number>) {
   const meta = computed(() => slides.value[unref(no) - 1]?.meta?.slide)
   const title = computed(() => info.value?.title ?? meta.value?.title ?? '')
   const frontmatter = computed<Record<string, any>>(() => info.value?.frontmatter ?? meta.value?.frontmatter ?? {})
-  const comments = computed(() => parseComments(info.value ? info.value.note : meta.value?.note))
+  // 本番ビルドには生のノートが残らないので、setup/preparser.ts が frontmatter に写した biimNote を使う
+  const comments = computed(() => parseComments(info.value?.note || meta.value?.note || frontmatter.value.biimNote))
   return { title, comments, frontmatter }
 }

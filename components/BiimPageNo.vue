@@ -7,22 +7,23 @@ const { currentSlideNo, total } = useNav()
 
 <template>
   <div class="biim-page-no font-mono">
-    <span class="now">{{ currentSlideNo }}</span><span class="sep">/</span><span>{{ total }}</span>
+    <span class="now">{{ currentSlideNo }}</span><span class="rest"><span class="sep">/</span>{{ total }}</span>
   </div>
 </template>
 
 <style scoped>
 .biim-page-no {
-  font-size: 0.7rem;
+  font-size: 1.3rem;
   line-height: 1;
   white-space: nowrap;
-  color: #9ca3af; /* 灰色 */
 }
 .now {
   font-weight: bold;
-  color: var(--slidev-theme-fg, currentColor);
+}
+.rest {
+  color: #9ca3af; /* 灰色 */
 }
 .sep {
-  margin: 0 0.1em;
+  margin: 0 0.15em;
 }
 </style>
