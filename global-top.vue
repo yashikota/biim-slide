@@ -19,10 +19,11 @@ useBiimControls() // タイマーのキー操作(s / r / 最後で停止)とス�
         <BiimSpeechText />
       </BiimSpeech>
 
-      <!-- 右端: 上(スライドのタイトル) 2 : 下(固定タイトル・タイマー) 6 -->
+      <!-- 右端: 上(スライドのタイトルとページ番号)は低い固定の高さ、下(固定タイトル・タイマー)は残り -->
       <div class="biim-side">
         <BiimFrame class="biim-title">
-          <BiimSlideTitle />
+          <BiimSlideTitle class="biim-title-text" />
+          <BiimPageNo class="biim-title-page" />
         </BiimFrame>
         <BiimFrame class="biim-info">
           <BiimDeckInfo />
@@ -92,7 +93,7 @@ useBiimControls() // タイマーのキー操作(s / r / 最後で停止)とス�
   grid-column: 3;
   grid-row: 1;
   display: grid;
-  grid-template-rows: 2fr 6fr;
+  grid-template-rows: 3.5rem 1fr;
   gap: var(--biim-gap);
   min-width: 0;
   min-height: 0;
@@ -101,9 +102,19 @@ useBiimControls() // タイマーのキー操作(s / r / 最後で停止)とス�
 .biim-side > .biim-frame {
   padding: 0.4rem 0.5rem;
 }
+/* タイトルは残りの幅いっぱい、ページ番号は右下 */
 .biim-title {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+.biim-title :deep(.biim-title-text) {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+}
+.biim-title :deep(.biim-title-page) {
+  flex: none;
 }
 /* 固定タイトル(BiimDeckInfo)は上、スプリット表は真ん中、タイマーは一番下 */
 .biim-info {

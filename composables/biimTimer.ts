@@ -36,6 +36,12 @@ export function toggle(currentNo: number) {
   tick()
 }
 
+/** まだ一度も動かしていない(またはリセット直後の)ときだけ開始する */
+export function startIfIdle(currentNo: number) {
+  if (!running.value && elapsed.value === 0)
+    toggle(currentNo)
+}
+
 /** タイマーとスプリットを 0 に戻す */
 export function reset() {
   base = 0
